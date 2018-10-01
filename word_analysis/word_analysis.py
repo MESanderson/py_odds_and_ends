@@ -18,26 +18,28 @@ def retrieve_page():
 
 def split_words(text):
     """
+    Simple function to lower case a block of text and split it into words (on spaces).
 
-    :param text:
-    :return:
+    :param text: string of text
+    :return: generator of lower case words
     """
     return (x.lower() for x in text.split())
 
 
 def get_word_count(word_list):
     """
-
-    :param word_list:
-    :return:
+    Real simple wrapper around Counter object. Probably overkill
+    :param word_list: iter of cleaned words to count ([string])
+    :return: collections.Counter object
     """
     return Counter(word_list)
 
+
 def remove_numbers_symbols(text_iter):
     """
-
-    :param text_iter:
-    :return:
+    Cleaning generator to remove anything that isn't a letter
+    :param text_iter: input iter of strings ([string])
+    :return: generator of words with non alphabet charcters removed
     """
     for word in text_iter:
         yield re.sub('[^a-zA-Z]', '', word)
@@ -45,20 +47,20 @@ def remove_numbers_symbols(text_iter):
 
 def remove_empty_words(text_iter):
     """
-
-    :param text_iter:
-    :return:
+    Generator for removing 'empty' words. Could probably have just used filter from itertools
+    :param text_iter: input iter of strings ([string])
+    :return: generator of non empty strings
     """
     return (x for x in text_iter if x != '')
 
 
 def remove_small_words(text_iter):
     """
-
-    :param text_iter:
-    :return:
+    Function to remove mostly prepositions.
+    :param text_iter: iter of strings ([string])
+    :return: generator of words with small words removed.
     """
-    SMALL_WORDS = {'a', 'the', 'an', 'and', 'on', 'it', 'but', 'for', 'of', 'to', 'in', 'is', '^', 'that',
+    SMALL_WORDS = {'a', 'the', 'an', 'and', 'on', 'it', 'but', 'for', 'of', 'to', 'in', 'is', 'that',
                    'are', 'as', 'with', 'by', 'be', 'or', 'also', 'has', 'its', 'between', 'this'}
     return (x for x in text_iter if x not in SMALL_WORDS)
 
